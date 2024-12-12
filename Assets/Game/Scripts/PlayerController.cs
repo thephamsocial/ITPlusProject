@@ -5,12 +5,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float rotateSpeed;
     [SerializeField] private Transform enemy;
-    [SerializeField] private GunController gunController;
+    [SerializeField] private GunControllerBase gun;
     private Rigidbody2D rigid;
     Vector2 movement;
     public void Init()
     {
-        gunController.Init(this);
+        if (gun == null) gun = GetComponentInChildren<GunControllerBase>();
+
+        gun.Init(this);
     }
     private void OnDrawGizmosSelected()
     {
@@ -26,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space))
         {
-            gunController.Fire();
+            gun.Fire();
         }
 
         if (Input.GetAxisRaw("Horizontal") > 0)

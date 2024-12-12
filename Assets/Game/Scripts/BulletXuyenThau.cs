@@ -4,7 +4,7 @@ using UnityEngine;
 public class BulletXuyenThau: BulletBase
 {
     private int countTarget = 0;
-    protected override void BulletStatus(GameObject target)
+    protected override void BulletDetect(GameObject target)
     {
         IGetHit isCanGetHit = target.GetComponent<IGetHit>();
 
@@ -18,11 +18,11 @@ public class BulletXuyenThau: BulletBase
         isCanGetHit.GetHit(damage);
         damage /= 2;
         speed /= 2;
-        if (countTarget >= 3) Destroy(gameObject);
+        if (countTarget >= 3) gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        BulletStatus(collision.gameObject);
+        BulletDetect(collision.gameObject);
     }
 }

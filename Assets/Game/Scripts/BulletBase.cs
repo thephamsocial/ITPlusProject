@@ -25,13 +25,17 @@ public abstract class BulletBase: MonoBehaviour
     {
         lifeTime -= Time.deltaTime;
         Debug.Log(lifeTime);
-        if (lifeTime <= 0) Destroy(gameObject);
+        if (lifeTime <= 0) gameObject.SetActive(false);
     }
     private void FixedUpdate()
     {
         rb.linearVelocity = dir * speed;
     }
    
-    protected abstract void BulletStatus(GameObject target);
-   
+    protected abstract void BulletDetect(GameObject target);
+    private void OnDisable()
+    {
+        rb.linearVelocity = Vector2.zero;
+    }
+
 }

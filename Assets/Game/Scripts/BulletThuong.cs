@@ -3,19 +3,19 @@ using UnityEngine;
 
 public class BulletThuong : BulletBase
 {
-    protected override void BulletStatus(GameObject target)
+    protected override void BulletDetect(GameObject target)
     {
         IGetHit isCanGetHit = target.GetComponent<IGetHit>();
         if (isCanGetHit != null)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
             isCanGetHit.GetHit(damage);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        BulletStatus(collision.gameObject);
+        BulletDetect(collision.gameObject);
     }
 
 }

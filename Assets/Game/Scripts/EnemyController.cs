@@ -9,6 +9,8 @@ public class EnemyController : MonoBehaviour, IGetHit
     [SerializeField] private float speed;
     [SerializeField] private float radius;
     [SerializeField] private LayerMask layerMask;
+
+    public GameManager gameManager;
     Vector2 movement;
     Vector2 dir;
     public bool isChasing = false;
@@ -18,7 +20,7 @@ public class EnemyController : MonoBehaviour, IGetHit
     }
     void Start()
     {
-
+        gameManager = GameManager.Instance;
     }
 
     // Update is called once per frame
@@ -126,13 +128,21 @@ public class EnemyController : MonoBehaviour, IGetHit
 
     public void GetHit(float damage)
     {
-     
 
+        if (hp <= 0)
+        {
+            return;
+        } 
         if (damage - armor >= 0)
         {
             hp -= (damage - armor);
         }
-        if (hp <= 0) Destroy(gameObject);
+        if (hp <= 0)
+        {
+            gameManager.kill++;
+            Destroy(gameObject);
+        }
+       
 
         Debug.Log("hp" + hp);
         Debug.Log("damage" + damage);
